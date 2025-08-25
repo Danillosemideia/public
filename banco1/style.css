@@ -1,0 +1,374 @@
+/* Reset e base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f7f7f7 0%, #e8e8e8 100%);
+    color: #2d3748;
+    line-height: 1.6;
+    min-height: 100vh;
+    text-align: center;
+}
+
+/* Container principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Cabeçalho */
+h1, h2, h3 {
+    color: #d97706;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+/* Formulários */
+form {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #4a5568;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    background: white;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+select:focus {
+    outline: none;
+    border-color: #d97706;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+}
+
+/* Botões */
+input[type="submit"],
+.btn {
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    margin: 10px 5px;
+}
+
+input[type="submit"]:hover,
+.btn:hover {
+    background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(217, 119, 6, 0.3);
+}
+
+/* Links */
+a {
+    color: #d97706;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #b45309;
+    text-decoration: underline;
+}
+
+/* Tabelas */
+table {
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin: 20px 0;
+}
+
+th {
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+    color: white;
+    padding: 16px;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 16px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #4a5568;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+tr:hover {
+    background: #f1f5f9;
+    transition: background 0.3s ease;
+}
+
+/* Cards e seções */
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin: 20px 0;
+}
+
+/* Divisão de login */
+.divLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.divLogin form {
+    margin: 0;
+}
+
+/* Mensagens de status */
+.success {
+    background: #d1fae5;
+    color: #065f46;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #10b981;
+    margin: 20px 0;
+}
+
+.error {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #ef4444;
+    margin: 20px 0;
+}
+
+/* Navegação */
+.nav-links {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.nav-links a {
+    margin: 0 15px;
+    padding: 10px 20px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.nav-links a:hover {
+    border-color: #d97706;
+    background: #fef7ed;
+    text-decoration: none;
+}
+
+/* Barra de boas-vindas */
+.welcome-bar {
+    background: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.welcome-bar span {
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.sair {
+    background: #ef4444 !important;
+    color: white !important;
+}
+
+.sair:hover {
+    background: #dc2626 !important;
+    transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    form {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    table {
+        font-size: 14px;
+    }
+    
+    th, td {
+        padding: 10px 8px;
+    }
+    
+    .welcome-bar {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .nav-links a {
+        display: block;
+        margin: 5px 0;
+    }
+}
+
+/* Animações sutis */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card, form, table {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Estilos para páginas específicas */
+.page-title {
+    text-align: center;
+    margin: 40px 0;
+    color: #2d3748;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b7280;
+    background: white;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.empty-state p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* Melhorias para ações da tabela */
+td a {
+    background: #f1f5f9;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-right: 5px;
+    transition: all 0.3s ease;
+}
+
+td a:hover {
+    background: #d97706;
+    color: white;
+    text-decoration: none;
+}
+
+/* Confirmação de exclusão */
+.confirm-dialog {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    max-width: 400px;
+    margin: 100px auto;
+}
+
+.confirm-dialog p {
+    margin-bottom: 30px;
+    font-size: 18px;
+    color: #4a5568;
+}
+
+.confirm-buttons a {
+    margin: 0 10px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.btn-yes {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-no {
+    background: #6b7280;
+    color: white;
+}
+
+.btn-yes:hover {
+    background: #dc2626;
+}
+
+.btn-no:hover {
+    background: #4b5563;
+}
+
+/* Ajustes finais */
+center {
+    text-align: center;
+}
