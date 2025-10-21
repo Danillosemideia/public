@@ -1,0 +1,455 @@
+REQUISITOS DE INFRAESTRUTURA
+SISTEMA DE GESTÃO DE ESTOQUE PARA EQUIPAMENTOS EDUCACIONAIS
+
+================================================================================
+1. SISTEMA GERENCIADOR DE BANCO DE DADOS (SGBD)
+================================================================================
+
+1.1 SGBD UTILIZADO
+- Nome: MySQL
+- Versão: 8.0.35 (ou superior)
+- Licença: GPL (open-source)
+- Porta Padrão: 3306
+
+1.2 JUSTIFICATIVA
+- Sistema relacional consolidado e confiável
+- Suporte nativo a transações e integridade referencial
+- Compatibilidade com linguagens web populares
+- Fácil instalação e configuração
+- Documentação abrangente
+- Bom custo-benefício (gratuito)
+
+1.3 CONFIGURAÇÕES RECOMENDADAS
+- Charset: utf8mb4 (suporte a caracteres especiais)
+- Collation: utf8mb4_unicode_ci
+- Storage Engine: InnoDB (padrão, com suporte a transações)
+- Backup: Realizar backup automático diário
+- Replicação: Configurável para ambientes de produção
+
+1.4 REQUISITOS MÍNIMOS DE HARDWARE PARA SGBD
+- Processador: Intel Core i5 ou equivalente
+- Memória RAM: 4GB mínimo (8GB recomendado)
+- Armazenamento: 50GB SSD (para dados e backups)
+- Conexão de rede: 100 Mbps
+
+================================================================================
+2. LINGUAGEM DE PROGRAMAÇÃO
+================================================================================
+
+2.1 LINGUAGEM UTILIZADA
+- Nome: PHP
+- Versão: 8.2.0 (ou superior)
+- Tipo: Linguagem interpretada server-side
+- Licença: PHP License (permissiva, open-source)
+
+2.2 JUSTIFICATIVA
+- Especializada em desenvolvimento web
+- Integração nativa com MySQL
+- Instalação simples em servidores
+- Comunidade grande e ativa
+- Documentação oficial excelente
+- Custo baixo (gratuito)
+- Suporte a programação orientada a objetos
+
+2.3 EXTENSÕES PHP NECESSÁRIAS
+- php-mysql: Driver para conexão com MySQL
+- php-session: Gerenciamento de sessões
+- php-json: Manipulação de JSON
+- php-filter: Validação de dados
+- php-hash: Funções de criptografia (SHA2)
+- php-pdo: Interface de abstração de banco de dados (recomendado)
+- php-mbstring: Suporte a strings multi-byte
+- php-date: Manipulação de datas
+
+2.4 CONFIGURAÇÕES RECOMENDADAS DO PHP
+- memory_limit: 512M
+- upload_max_filesize: 50M
+- post_max_size: 50M
+- max_execution_time: 300 segundos
+- display_errors: Off (em produção)
+- error_log: Habilitado
+- session.cookie_httponly: On (segurança)
+
+2.5 VERSÃO MINIMA SUPORTADA
+- PHP 7.4 (compatibilidade), porém PHP 8.2+ recomendado para performance
+
+================================================================================
+3. SERVIDOR WEB
+================================================================================
+
+3.1 SERVIDOR UTILIZADO
+- Nome: Apache HTTP Server
+- Versão: 2.4.54 (ou superior)
+- Licença: Apache License 2.0 (open-source)
+- Porta Padrão: 80 (HTTP) e 443 (HTTPS)
+
+3.2 JUSTIFICATIVA
+- Servidor web mais utilizado no mundo
+- Excelente compatibilidade com PHP
+- Módulo mod_rewrite para URL amigáveis
+- Suporte a .htaccess para configuração granular
+- Documentação abrangente
+- Fácil instalação
+
+3.3 MÓDULOS APACHE NECESSÁRIOS
+- mod_rewrite: Reescrita de URLs
+- mod_ssl: Suporte a HTTPS/TLS
+- mod_headers: Manipulação de headers HTTP
+- mod_php: Integração com PHP (ou php-fpm)
+
+3.4 CONFIGURAÇÕES RECOMENDADAS
+- MaxRequestWorkers: 256
+- KeepAlive: On
+- KeepAliveTimeout: 15 segundos
+- AllowOverride: All (se usar .htaccess)
+
+3.5 ALTERNATIVAS POSSÍVEIS
+- Nginx: Mais leve, melhor performance (requer PHP-FPM)
+- Microsoft IIS: Para ambientes Windows
+
+================================================================================
+4. SISTEMA OPERACIONAL - DESENVOLVIMENTO
+================================================================================
+
+4.1 SISTEMA OPERACIONAL UTILIZADO
+- Nome: Windows 11 Professional
+- Versão: Build 22631.2715 (ou superior)
+- Arquitetura: x64 (64-bit)
+- Licença: Microsoft
+
+4.2 JUSTIFICATIVA
+- Ambiente de desenvolvimento confortável
+- Fácil instalação de ferramentas (XAMPP, WAMP)
+- Interface gráfica intuitiva
+- Compatibilidade com IDEs populares
+
+4.3 REQUISITOS MÍNIMOS DO SISTEMA OPERACIONAL
+- Processador: Dual-core 2GHz ou superior
+- Memória RAM: 8GB (mínimo para desenvolvimento confortável)
+- Armazenamento: 50GB SSD
+- Conexão de rede: 5 Mbps
+
+4.4 SOFTWARE ADICIONAL NECESSÁRIO
+- Git: Versão 2.40+ (controle de versão)
+- Visual Studio Code ou PHPStorm (IDE/Editor)
+- Postman: 10.18+ (teste de APIs)
+- MySQL Workbench: 8.0.35+ (gerenciamento de BD)
+
+================================================================================
+5. PACOTE ALL-IN-ONE RECOMENDADO
+================================================================================
+
+5.1 XAMPP (Recomendado para Desenvolvimento)
+- Apache: 2.4.54+
+- MySQL: 8.0.35+
+- PHP: 8.2.0+
+- Versão: XAMPP 8.2.0 (ou superior)
+- Link: https://www.apachefriends.org/
+
+Vantagens:
+- Instalação única com todos os componentes
+- Interface Control Panel para facilitar inicialização
+- Configuração pré-otimizada
+- Ideal para desenvolvimento rápido
+
+5.2 ALTERNATIVAS
+- WAMP Stack (Windows, Apache, MySQL, PHP)
+- LAMP Stack (Linux, Apache, MySQL, PHP)
+- Docker Compose (containerização)
+
+================================================================================
+6. AMBIENTE DE PRODUÇÃO (RECOMENDADO)
+================================================================================
+
+6.1 SERVIDOR LINUX
+- Sistema Operacional: Ubuntu Server 22.04 LTS
+- Arquitetura: x64 (64-bit)
+- Kernel: 5.15+
+
+6.2 ESPECIFICAÇÕES RECOMENDADAS
+- Processador: 4 cores, 2.5 GHz
+- Memória RAM: 16GB
+- Armazenamento: 100GB SSD
+- Banda: 1 Gbps
+
+6.3 CONFIGURAÇÃO DE SEGURANÇA
+- Firewall: UFW ou iptables
+- SSL/TLS: Let's Encrypt (certificado gratuito)
+- Fail2Ban: Proteção contra força bruta
+- Fail2Ban: Monitoramento de logs
+- Backup automático: 3 cópias (local, externo, nuvem)
+
+================================================================================
+7. ARQUITETURA DO SISTEMA
+================================================================================
+
+7.1 CAMADAS
+```
+┌─────────────────────────────────────────┐
+│      CAMADA DE APRESENTAÇÃO (UI)        │
+│  HTML5, CSS3, JavaScript (Frontend)     │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│    CAMADA DE APLICAÇÃO (PHP)            │
+│  Lógica de negócio, Controllers         │
+│  Validações, Segurança                  │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│    CAMADA DE PERSISTÊNCIA (BD)          │
+│  MySQL 8.0.35+                          │
+│  Tabelas: usuarios, produtos,           │
+│           movimentacoes                 │
+└─────────────────────────────────────────┘
+```
+
+7.2 FLUXO DE REQUISIÇÃO
+1. Cliente submete requisição HTTP
+2. Apache recebe e passa para PHP
+3. PHP processa lógica de negócio
+4. PHP consulta MySQL conforme necessário
+5. Resposta é enviada para cliente
+6. Cliente renderiza HTML/CSS/JavaScript
+
+================================================================================
+8. COMUNICAÇÃO E PROTOCOLO
+================================================================================
+
+8.1 PROTOCOLO DE REDE
+- HTTP/HTTPS: Protocolo de transferência
+- TCP/IP: Protocolo de rede (automático)
+- DNS: Resolução de domínios (para produção)
+
+8.2 PADRÃO DE COMUNICAÇÃO
+- Request-Response REST (Stateless)
+- Sessão gerenciada por cookies (PHP Sessions)
+- JSON para troca de dados (AJAX)
+
+================================================================================
+9. CONTROLE DE VERSÃO
+================================================================================
+
+9.1 SISTEMA UTILIZADO
+- Git: Versão 2.40+
+- Repositório: Local ou GitHub/GitLab
+
+9.2 ESTRUTURA DE BRANCHES
+- main: Código estável em produção
+- develop: Código em desenvolvimento
+- feature/: Branches para novas features
+- bugfix/: Branches para correções
+
+================================================================================
+10. DOCUMENTAÇÃO TÉCNICA E FERRAMENTAS
+================================================================================
+
+10.1 FERRAMENTAS DE DESENVOLVIMENTO
+- IDE: Visual Studio Code (gratuito) ou PHPStorm (pago)
+- Versionamento: Git + GitHub
+- Testes: PHPUnit (framework de testes)
+- Documentação: phpDocumentor
+
+10.2 FERRAMENTAS DE PRODUÇÃO
+- Monitoramento: Grafana + Prometheus
+- Logs: ELK Stack (Elasticsearch, Logstash, Kibana)
+- CI/CD: Jenkins ou GitHub Actions
+
+================================================================================
+11. DEPENDÊNCIAS E COMPATIBILIDADES
+================================================================================
+
+11.1 COMPATIBILIDADE VERIFICADA
+- Apache 2.4+ com PHP 8.2+: ✓ Confirmada
+- PHP 8.2+ com MySQL 8.0+: ✓ Confirmada
+- MySQL 8.0+ com Windows/Linux: ✓ Confirmada
+
+11.2 DEPENDÊNCIAS
+- PHP depende de Apache (ou Nginx)
+- PHP depende de MySQL (via php-mysql)
+- Apache depende do SO (Windows/Linux)
+
+================================================================================
+12. REQUISITOS DE REDE
+================================================================================
+
+12.1 CONECTIVIDADE
+- Velocidade mínima: 5 Mbps download, 2 Mbps upload
+- Latência máxima: 100ms
+- Disponibilidade: 99.5%+
+
+12.2 PORTA PADRÃO DO SISTEMA
+- HTTP: 80
+- HTTPS: 443
+- MySQL: 3306 (apenas acesso local recomendado)
+
+================================================================================
+13. REQUISITOS DE SEGURANÇA
+================================================================================
+
+13.1 CRIPTOGRAFIA
+- Algoritmo de Hash: SHA2-256 (para senhas)
+- SSL/TLS: Versão 1.2 ou superior (para produção)
+- Protocolo: HTTPS obrigatório em produção
+
+13.2 AUTENTICAÇÃO
+- Sessões: PHP Sessions com httponly cookie
+- Token CSRF: Implementado em todos os formulários
+- Proteção contra SQL Injection: Prepared Statements
+
+13.3 BACKUP E RECUPERAÇÃO
+- Frequência: Diária (mínimo)
+- Local: Externo ou nuvem
+- Teste de restauração: Semanal
+- Retenção: Mínimo 30 dias
+
+================================================================================
+14. ESCALABILIDADE
+================================================================================
+
+14.1 SUPORTE A CRESCIMENTO
+- Banco de dados: Suporta até 1 milhão de registros com performance aceitável
+- Usuários simultâneos: Mínimo 50 (configuração padrão Apache)
+- Requisições por segundo: 100+ (com servidor adequado)
+
+14.2 MELHORIAS FUTURAS
+- Cache: Redis ou Memcached
+- Load Balancer: Nginx ou HAProxy
+- CDN: CloudFlare ou CloudFront
+- Replicação de BD: MySQL Master-Slave
+
+================================================================================
+15. CUSTO ESTIMADO
+================================================================================
+
+15.1 DESENVOLVIMENTO (ONE-TIME)
+- Servidor de desenvolvimento: XAMPP (Gratuito)
+- IDE/Editor: Visual Studio Code (Gratuito)
+- Banco de dados: MySQL (Gratuito)
+- Servidor web: Apache (Gratuito)
+- Linguagem: PHP (Gratuito)
+- TOTAL DESENVOLVIMENTO: R$ 0 (sem custos de software)
+
+15.2 PRODUÇÃO (MENSAL)
+- Hosting Linux compartilhado: R$ 30-50/mês
+OU
+- VPS: R$ 50-150/mês
+OU
+- Servidor dedicado: R$ 200-500/mês
+
+- Domínio: R$ 30-50/ano
+- SSL Certificate: Gratuito (Let's Encrypt) ou R$ 15-30/ano
+- Backup externo: R$ 10-30/mês
+- Monitoramento: Gratuito a R$ 50/mês
+
+15.3 TOTAL PRODUÇÃO ESTIMADO: R$ 100-250/mês (configuração básica)
+
+================================================================================
+16. CHECKLIST DE INSTALAÇÃO
+================================================================================
+
+16.1 PARA DESENVOLVIMENTO (Windows)
+☐ Baixar e instalar XAMPP 8.2.0+
+☐ Instalar Git 2.40+
+☐ Instalar Visual Studio Code
+☐ Instalar MySQL Workbench
+☐ Instalar Postman
+☐ Configurar variáveis de ambiente
+☐ Clonar repositório do projeto
+☐ Executar script SQL (schema_db.sql)
+☐ Testar conexão com BD
+☐ Iniciar Apache e MySQL
+☐ Acessar http://localhost/sistema_estoque
+
+16.2 PARA PRODUÇÃO (Ubuntu Server)
+☐ Atualizar SO (apt update && apt upgrade)
+☐ Instalar Apache (apt install apache2)
+☐ Instalar PHP 8.2 (apt install php8.2 php8.2-mysql php8.2-cli)
+☐ Instalar MySQL Server (apt install mysql-server)
+☐ Configurar MySQL (mysql_secure_installation)
+☐ Criar banco de dados (escola_db)
+☐ Instalar Git (apt install git)
+☐ Clonar repositório
+☐ Configurar permissões de arquivos
+☐ Habilitar HTTPS (Let's Encrypt)
+☐ Configurar Firewall (ufw)
+☐ Testar sistema
+☐ Configurar backups automáticos
+
+================================================================================
+17. SUPORTE E MANUTENÇÃO
+================================================================================
+
+17.1 ATUALIZAÇÕES
+- PHP: Verificar atualizações mensalmente
+- MySQL: Aplicar patches de segurança assim que disponíveis
+- Apache: Atualizar quando houver vulnerabilidades críticas
+- SO: Aplicar atualizações de segurança regularmente
+
+17.2 MONITORAMENTO
+- Logs: Revisar logs de erro diariamente
+- Performance: Monitorar uso de CPU e memória
+- Segurança: Verificar tentativas de acesso suspeito
+- Backup: Testar restauração semanalmente
+
+17.3 SLA RECOMENDADO
+- Tempo de resposta: < 2s para requisições normais
+- Disponibilidade: 99.5% (máximo 3h de downtime/mês)
+- MTTR (Mean Time to Recover): < 1 hora
+
+================================================================================
+18. MATRIZ DE COMPATIBILIDADE
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────┐
+│         COMPONENTE         │   VERSÃO MÍNIMA   │   VERSÃO ATUAL   │
+├─────────────────────────────────────────────────────────────────────┤
+│ Apache                      │   2.4.0           │   2.4.54+        │
+│ PHP                         │   7.4.0           │   8.2.0+         │
+│ MySQL                       │   5.7.0           │   8.0.35+        │
+│ Windows                     │   10              │   11 Pro         │
+│ Ubuntu                      │   18.04 LTS       │   22.04 LTS      │
+│ Git                         │   2.30.0          │   2.40+          │
+│ Google Chrome               │   80              │   120+           │
+│ Firefox                     │   78              │   120+           │
+└─────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+19. REFERÊNCIAS E DOCUMENTAÇÃO OFICIAL
+================================================================================
+
+19.1 DOCUMENTAÇÃO OFICIAL
+- Apache: https://httpd.apache.org/docs/
+- PHP: https://www.php.net/docs.php
+- MySQL: https://dev.mysql.com/doc/
+- Git: https://git-scm.com/doc
+- MDN Web Docs: https://developer.mozilla.org/
+
+19.2 COMUNIDADES E SUPORTE
+- Stack Overflow: https://stackoverflow.com/
+- GitHub Issues: Para reportar bugs e sugestões
+- Fórum PHP: https://www.php.net/support.php
+- MySQL Community Forums: https://forums.mysql.com/
+
+================================================================================
+20. CONCLUSÃO
+================================================================================
+
+O sistema foi desenvolvido com arquitetura modular e utiliza tecnologias
+open-source consolidadas no mercado. A escolha de Apache 2.4+, PHP 8.2+ e
+MySQL 8.0+ fornece um ambiente robusto, seguro e escalável.
+
+Os requisitos apresentados garantem:
+✓ Facilidade de instalação e configuração
+✓ Segurança adequada para dados educacionais
+✓ Performance satisfatória para até 1000 usuários simultâneos
+✓ Custo reduzido com software open-source
+✓ Suporte contínuo da comunidade
+✓ Compatibilidade com múltiplas plataformas
+
+Recomenda-se revisar este documento anualmente e atualizar versões
+conforme segurança e funcionalidades forem necessárias.
+
+================================================================================
+FIM DA DOCUMENTAÇÃO DE INFRAESTRUTURA
+================================================================================

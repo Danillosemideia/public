@@ -1,0 +1,680 @@
+DESCRITIVO DE TESTES DE SOFTWARE
+SISTEMA DE GESTÃO DE ESTOQUE PARA EQUIPAMENTOS EDUCACIONAIS
+
+================================================================================
+1. AMBIENTE E FERRAMENTAS DE TESTE
+================================================================================
+
+1.1 AMBIENTE DE TESTE
+- Servidor Web: Apache 2.4+
+- Banco de Dados: MySQL 8.0+
+- Navegador: Google Chrome (última versão), Firefox (última versão), Edge (última versão)
+- Sistema Operacional: Windows 10/11, Linux Ubuntu 20.04+
+- Memória Mínima: 4GB RAM
+- Conexão: Banda mínima de 5Mbps
+
+1.2 FERRAMENTAS DE TESTE
+- Ferramenta de Teste Funcional: Selenium WebDriver
+- Ferramenta de Teste Manual: Planilha de Testes (Excel/Google Sheets)
+- Ferramenta de Teste de Performance: JMeter
+- Ferramenta de Validação de Banco de Dados: MySQL Workbench
+- Ferramenta de Teste de Segurança: OWASP ZAP
+- Navegador para Teste Manual: Chrome Developer Tools
+
+1.3 AMBIENTE DE CONFIGURAÇÃO
+- URL base de teste: http://localhost/sistema_estoque/
+- Banco de dados de teste: escola_db_teste
+- Conta de teste admin: admin@teste.com / senha123
+- Conta de teste gerente: gerente@teste.com / gerente456
+- Conta de teste estoquista: estoque@teste.com / estoque789
+
+================================================================================
+2. CASOS DE TESTE - MÓDULO DE AUTENTICAÇÃO
+================================================================================
+
+2.1 CASO DE TESTE: CT-001 - Login com Credenciais Válidas
+Objetivo: Verificar se o sistema autentica usuário com dados corretos
+Pré-condições: 
+  - Usuário cadastrado no banco (admin@escola.com / senha123)
+  - Sistema online
+Passos:
+  1. Acessar página de login
+  2. Inserir e-mail: admin@escola.com
+  3. Inserir senha: senha123
+  4. Clicar em "Entrar"
+Resultado esperado: 
+  - Usuário autenticado com sucesso
+  - Redirecionamento para tela principal
+  - Nome do usuário exibido na interface
+Critério de aceitação: Login realizado e interface principal carregada em < 3s
+
+2.2 CASO DE TESTE: CT-002 - Login com E-mail Inválido
+Objetivo: Verificar tratamento de login com e-mail não registrado
+Pré-condições:
+  - Página de login acessível
+Passos:
+  1. Acessar página de login
+  2. Inserir e-mail: usuario_inexistente@escola.com
+  3. Inserir senha: qualquer_senha
+  4. Clicar em "Entrar"
+Resultado esperado:
+  - Mensagem de erro: "Usuário ou senha inválidos"
+  - Permanência na página de login
+  - Campo de senha limpo por segurança
+Critério de aceitação: Mensagem de erro exibida em até 2s
+
+2.3 CASO DE TESTE: CT-003 - Login com Senha Incorreta
+Objetivo: Verificar tratamento de login com senha errada
+Pré-condições:
+  - Usuário admin@escola.com cadastrado
+Passos:
+  1. Acessar página de login
+  2. Inserir e-mail: admin@escola.com
+  3. Inserir senha: senha_errada
+  4. Clicar em "Entrar"
+Resultado esperado:
+  - Mensagem de erro: "Usuário ou senha inválidos"
+  - Permanência na página de login
+  - Tentativa registrada no log
+Critério de aceitação: Mensagem exibida corretamente
+
+2.4 CASO DE TESTE: CT-004 - Validação de Campos Vazios
+Objetivo: Verificar validação de campos obrigatórios
+Pré-condições:
+  - Página de login acessível
+Passos:
+  1. Acessar página de login
+  2. Deixar campos vazios
+  3. Clicar em "Entrar"
+Resultado esperado:
+  - Mensagem de validação: "Preencha todos os campos"
+  - Formulário não é submetido
+Critério de aceitação: Validação client-side funciona antes de enviar ao servidor
+
+2.5 CASO DE TESTE: CT-005 - Logout Funcionando
+Objetivo: Verificar se logout encerra sessão corretamente
+Pré-condições:
+  - Usuário autenticado na interface principal
+Passos:
+  1. Clicar em opção "Logout"
+  2. Confirmar logout se solicitado
+Resultado esperado:
+  - Sessão encerrada
+  - Redirecionamento para página de login
+  - Histórico do navegador não permite voltar para interface autenticada
+Critério de aceitação: Redirecionamento imediato para login
+
+================================================================================
+3. CASOS DE TESTE - INTERFACE PRINCIPAL
+================================================================================
+
+3.1 CASO DE TESTE: CT-006 - Exibição de Dados do Usuário
+Objetivo: Verificar se dados do usuário logado aparecem corretamente
+Pré-condições:
+  - Usuário autenticado (admin@escola.com, nome: Administrador)
+Passos:
+  1. Verificar topo/barra da interface principal
+Resultado esperado:
+  - Nome "Administrador" exibido na interface
+  - Nome do usuário correto conforme banco de dados
+Critério de aceitação: Nome exibido sem truncamento e corretamente posicionado
+
+3.2 CASO DE TESTE: CT-007 - Acesso ao Módulo Cadastro de Produto
+Objetivo: Verificar navegação para módulo de cadastro
+Pré-condições:
+  - Usuário na interface principal
+Passos:
+  1. Clicar em "Cadastro de Produto"
+Resultado esperado:
+  - Interface de cadastro carregada
+  - Lista de produtos exibida
+  - Formulário para novo produto visível
+Critério de aceitação: Interface carregada em < 3s
+
+3.3 CASO DE TESTE: CT-008 - Acesso ao Módulo Gestão de Estoque
+Objetivo: Verificar navegação para módulo de gestão
+Pré-condições:
+  - Usuário na interface principal
+Passos:
+  1. Clicar em "Gestão de Estoque"
+Resultado esperado:
+  - Interface de gestão carregada
+  - Lista de produtos em ordem alfabética
+  - Opções de entrada/saída disponíveis
+Critério de aceitação: Interface carregada em < 3s
+
+================================================================================
+4. CASOS DE TESTE - CADASTRO DE PRODUTO
+================================================================================
+
+4.1 CASO DE TESTE: CT-009 - Carregamento Automático de Produtos
+Objetivo: Verificar se produtos são listados ao acessar interface
+Pré-condições:
+  - Banco contém 9 produtos cadastrados
+  - Usuário na interface de cadastro
+Passos:
+  1. Acessar interface "Cadastro de Produto"
+Resultado esperado:
+  - Tabela carregada com 9 produtos
+  - Colunas: ID, Nome, Descrição, Quantidade, Estoque Mínimo, Data
+  - Sem necessidade de ação adicional do usuário
+Critério de aceitação: Dados carregados e exibidos em < 2s
+
+4.2 CASO DE TESTE: CT-010 - Busca por Nome de Produto
+Objetivo: Verificar filtro de busca funcionando
+Pré-condições:
+  - Interface de cadastro aberta com produtos listados
+Passos:
+  1. Inserir "Caderno" no campo de busca
+  2. Pressionar Enter ou clicar buscar
+Resultado esperado:
+  - Tabela atualizada mostrando apenas produtos com "Caderno"
+  - Produtos retornados: "Caderno 200 folhas", "Caderno Desenho"
+  - Quantidade de resultados exibida
+Critério de aceitação: Filtro funcionando em < 1s
+
+4.3 CASO DE TESTE: CT-011 - Busca por Descrição
+Objetivo: Verificar busca em campo descrição
+Pré-condições:
+  - Interface com campo de busca ativo
+Passos:
+  1. Inserir "fluorescentes" no campo de busca
+  2. Confirmar busca
+Resultado esperado:
+  - Retorna "Marcadores de Texto" (descrição contém "fluorescentes")
+Critério de aceitação: Busca em múltiplos campos funcionando
+
+4.4 CASO DE TESTE: CT-012 - Busca sem Resultados
+Objetivo: Verificar comportamento quando busca não retorna dados
+Pré-condições:
+  - Campo de busca preenchido
+Passos:
+  1. Inserir termo inexistente: "xyz123abc"
+  2. Confirmar busca
+Resultado esperado:
+  - Mensagem: "Nenhum produto encontrado"
+  - Tabela vazia
+Critério de aceitação: Mensagem clara para usuário
+
+4.5 CASO DE TESTE: CT-013 - Inserção de Novo Produto Válido
+Objetivo: Verificar cadastro de novo produto com dados válidos
+Pré-condições:
+  - Interface de cadastro aberta
+  - Formulário visível
+Passos:
+  1. Clicar em "Novo Produto" ou no formulário
+  2. Preencher:
+     - Nome: "Tesoura Escolar"
+     - Descrição: "Tesoura de segurança infantil"
+     - Quantidade: 50
+     - Estoque Mínimo: 10
+  3. Clicar "Salvar"
+Resultado esperado:
+  - Mensagem: "Produto cadastrado com sucesso"
+  - Produto aparece na tabela
+  - Formulário limpo
+  - Novo produto com ID gerado automaticamente
+Critério de aceitação: Registro inserido corretamente no BD em < 2s
+
+4.6 CASO DE TESTE: CT-014 - Inserção sem Campo Obrigatório
+Objetivo: Verificar validação de campos obrigatórios
+Pré-condições:
+  - Formulário de novo produto aberto
+Passos:
+  1. Preencher apenas Nome: "Lápis de Cor"
+  2. Deixar Descrição vazia
+  3. Clicar "Salvar"
+Resultado esperado:
+  - Mensagem de erro: "Descrição é obrigatória"
+  - Formulário não submetido
+  - Dados preenchidos mantidos
+Critério de aceitação: Validação client-side impede submissão
+
+4.7 CASO DE TESTE: CT-015 - Inserção com Quantidade Negativa
+Objetivo: Verificar validação de quantidade
+Pré-condições:
+  - Formulário aberto
+Passos:
+  1. Preencher formulário normalmente
+  2. Inserir Quantidade: -5
+  3. Clicar "Salvar"
+Resultado esperado:
+  - Mensagem: "Quantidade deve ser maior ou igual a zero"
+  - Formulário não submetido
+Critério de aceitação: Validação numérica funcionando
+
+4.8 CASO DE TESTE: CT-016 - Inserção com Nome Duplicado
+Objetivo: Verificar validação de unicidade de nome
+Pré-condições:
+  - "Caderno 200 folhas" já existe no BD
+Passos:
+  1. Tentar inserir produto com Nome: "Caderno 200 folhas"
+  2. Preencher outros campos normalmente
+  3. Clicar "Salvar"
+Resultado esperado:
+  - Mensagem: "Este produto já existe no banco de dados"
+  - Produto não é inserido
+Critério de aceitação: Chave única garantida
+
+4.9 CASO DE TESTE: CT-017 - Edição de Produto Existente
+Objetivo: Verificar atualização de dados de produto
+Pré-condições:
+  - "Caderno 200 folhas" cadastrado com quantidade 45
+  - Interface de cadastro aberta
+Passos:
+  1. Clicar em "Editar" no produto "Caderno 200 folhas"
+  2. Alterar Quantidade para 60
+  3. Alterar Estoque Mínimo para 15
+  4. Clicar "Salvar"
+Resultado esperado:
+  - Mensagem: "Produto atualizado com sucesso"
+  - Tabela atualizada com novos valores
+  - Data de atualização refletida no BD
+Critério de aceitação: Dados alterados corretamente em < 2s
+
+4.10 CASO DE TESTE: CT-018 - Exclusão de Produto
+Objetivo: Verificar deleção de produto com confirmação
+Pré-condições:
+  - Produto "Tesoura Escolar" cadastrado
+  - Interface de cadastro aberta
+Passos:
+  1. Clicar em "Deletar" no produto "Tesoura Escolar"
+  2. Confirmar exclusão na janela modal
+Resultado esperado:
+  - Mensagem: "Produto deletado com sucesso"
+  - Produto não aparece mais na tabela
+  - Registro removido do BD
+Critério de aceitação: Deleção confirmada antes de executar
+
+4.11 CASO DE TESTE: CT-019 - Cancelamento de Exclusão
+Objetivo: Verificar se confirmação previne deleção acidental
+Pré-condições:
+  - Produto disponível na tabela
+Passos:
+  1. Clicar em "Deletar" no produto
+  2. Clicar "Cancelar" na modal
+Resultado esperado:
+  - Modal fecha
+  - Produto continua no banco de dados
+  - Tabela não é alterada
+Critério de aceitação: Produto não deletado
+
+4.12 CASO DE TESTE: CT-020 - Retorno à Interface Principal
+Objetivo: Verificar navegação de volta
+Pré-condições:
+  - Usuário na interface de cadastro
+Passos:
+  1. Clicar em "Voltar" ou "Principal"
+Resultado esperado:
+  - Retorna à interface principal
+  - Dados não submetidos são descartados
+  - Sem mensagens de erro
+Critério de aceitação: Navegação fluida
+
+================================================================================
+5. CASOS DE TESTE - GESTÃO DE ESTOQUE
+================================================================================
+
+5.1 CASO DE TESTE: CT-021 - Listagem Alfabética de Produtos
+Objetivo: Verificar ordenação correta de produtos
+Pré-condições:
+  - 9 produtos cadastrados no BD
+  - Interface de gestão aberta
+Passos:
+  1. Acessar interface "Gestão de Estoque"
+Resultado esperado:
+  - Produtos listados em ordem alfabética A-Z:
+    1. Apontador Metal
+    2. Borracha Branca
+    3. Caderno 200 folhas
+    4. Caderno Desenho
+    5. Canetão Colorido
+    6. Lápis Grafite HB
+    7. Marcadores de Texto
+    8. Tinta Guache 12 cores
+    9. Uniforme Tamanho G
+  - Nenhuma ação manual necessária
+Critério de aceitação: Algoritmo de ordenação aplicado corretamente
+
+5.2 CASO DE TESTE: CT-022 - Seleção de Produto para Movimentação
+Objetivo: Verificar seleção e opções de tipo de movimentação
+Pré-condições:
+  - Interface de gestão aberta com produtos listados
+Passos:
+  1. Selecionar produto "Caderno 200 folhas"
+  2. Verificar opções de tipo
+Resultado esperado:
+  - Opção "Entrada" disponível
+  - Opção "Saída" disponível
+  - Apenas um tipo pode ser selecionado por vez
+Critério de aceitação: Seleção de tipo funcionando
+
+5.3 CASO DE TESTE: CT-023 - Registro de Entrada de Estoque
+Objetivo: Verificar registro correto de entrada de produto
+Pré-condições:
+  - "Lápis Grafite HB" com 80 unidades
+  - Interface de gestão aberta
+Passos:
+  1. Selecionar "Lápis Grafite HB"
+  2. Selecionar tipo "Entrada"
+  3. Inserir Quantidade: 20
+  4. Inserir Data: 15/10/2024
+  5. Clicar "Confirmar"
+Resultado esperado:
+  - Mensagem: "Entrada registrada com sucesso"
+  - Quantidade atualizada para 100 (80 + 20)
+  - Registro criado na tabela movimentacoes
+  - Responsável e data/hora registrados automaticamente
+Critério de aceitação: Quantidade atualizada corretamente em < 2s
+
+5.4 CASO DE TESTE: CT-024 - Registro de Saída de Estoque
+Objetivo: Verificar registro de saída sem alertas
+Pré-condições:
+  - "Borracha Branca" com 150 unidades (mínimo: 20)
+  - Interface de gestão aberta
+Passos:
+  1. Selecionar "Borracha Branca"
+  2. Selecionar tipo "Saída"
+  3. Inserir Quantidade: 25
+  4. Inserir Data: 15/10/2024
+  5. Clicar "Confirmar"
+Resultado esperado:
+  - Mensagem: "Saída registrada com sucesso"
+  - Quantidade atualizada para 125 (150 - 25)
+  - 125 > 20 (acima do mínimo)
+  - Sem alerta de estoque mínimo
+  - Movimentação registrada com usuário responsável
+Critério de aceitação: Saída realizada sem alerta quando acima do mínimo
+
+5.5 CASO DE TESTE: CT-025 - Alerta de Estoque Mínimo
+Objetivo: Verificar alerta ao atingir estoque mínimo
+Pré-condições:
+  - "Caderno Desenho" com 35 unidades (mínimo: 8)
+  - Interface de gestão aberta
+Passos:
+  1. Selecionar "Caderno Desenho"
+  2. Selecionar tipo "Saída"
+  3. Inserir Quantidade: 28
+  4. Inserir Data: 15/10/2024
+  5. Clicar "Confirmar"
+Resultado esperado:
+  - Saída registrada (35 - 28 = 7)
+  - Alerta visual exibido: "ALERTA: Estoque abaixo do mínimo!"
+  - Alerta indica: "Estoque Mínimo: 8 | Estoque Atual: 7"
+  - Cor de destaque (amarelo/vermelho)
+  - Opção para o usuário descartar ou confirmar
+Critério de aceitação: Alerta exibido visualmente antes de finalizar
+
+5.6 CASO DE TESTE: CT-026 - Saída com Estoque Insuficiente
+Objetivo: Verificar validação de quantidade disponível
+Pré-condições:
+  - "Tinta Guache 12 cores" com 25 unidades
+  - Interface de gestão aberta
+Passos:
+  1. Selecionar "Tinta Guache 12 cores"
+  2. Selecionar tipo "Saída"
+  3. Inserir Quantidade: 30
+  4. Inserir Data: 15/10/2024
+  5. Clicar "Confirmar"
+Resultado esperado:
+  - Mensagem de erro: "Quantidade de saída não pode exceder o estoque disponível"
+  - Erro específico: "Disponível: 25 | Solicitado: 30"
+  - Operação não é realizada
+  - Quantidade no BD permanece 25
+Critério de aceitação: Validação impede saída incorreta
+
+5.7 CASO DE TESTE: CT-027 - Entrada com Quantidade Zero
+Objetivo: Verificar validação de quantidade válida
+Pré-condições:
+  - Formulário de movimentação aberto
+Passos:
+  1. Selecionar produto
+  2. Selecionar "Entrada"
+  3. Inserir Quantidade: 0
+  4. Clicar "Confirmar"
+Resultado esperado:
+  - Mensagem: "Quantidade deve ser maior que zero"
+  - Operação não realizada
+Critério de aceitação: Validação funcionando
+
+5.8 CASO DE TESTE: CT-028 - Entrada com Quantidade Negativa
+Objetivo: Verificar validação de valores negativos
+Pré-condições:
+  - Formulário de movimentação aberto
+Passos:
+  1. Selecionar produto
+  2. Selecionar "Entrada"
+  3. Inserir Quantidade: -10
+  4. Clicar "Confirmar"
+Resultado esperado:
+  - Mensagem: "Quantidade deve ser maior que zero"
+  - Operação não realizada
+Critério de aceitação: Número negativo rejeitado
+
+5.9 CASO DE TESTE: CT-029 - Data de Movimentação Válida
+Objetivo: Verificar aceitação de data válida
+Pré-condições:
+  - Formulário aberto
+Passos:
+  1. Preencher formulário
+  2. Inserir Data: 10/10/2024
+  3. Clicar "Confirmar"
+Resultado esperado:
+  - Movimentação registrada com data correta
+  - Data armazenada no BD em formato correto
+Critério de aceitação: Data registrada corretamente
+
+5.10 CASO DE TESTE: CT-030 - Data Futura em Movimentação
+Objetivo: Verificar validação de data futura
+Pré-condições:
+  - Data atual: 12/10/2024
+  - Formulário aberto
+Passos:
+  1. Tentar inserir Data: 25/10/2025
+  2. Clicar "Confirmar"
+Resultado esperado:
+  - Validação: Data não pode ser futura
+  - Operação não realizada
+  - Mensagem de erro exibida
+Critério de aceitação: Data futura rejeitada
+
+5.11 CASO DE TESTE: CT-031 - Registro de Movimentações no Histórico
+Objetivo: Verificar rastreabilidade de operações
+Pré-condições:
+  - 3 movimentações realizadas no teste CT-023, CT-024, CT-025
+Passos:
+  1. Acessar seção de histórico (se disponível)
+  2. Verificar registros
+Resultado esperado:
+  - Todas as 3 movimentações aparecem
+  - Cada registro contém:
+    * Produto movimentado
+    * Tipo (Entrada/Saída)
+    * Quantidade
+    * Data/Hora
+    * Usuário responsável
+  - Registros em ordem cronológica (mais recente primeiro)
+Critério de aceitação: Rastreabilidade completa garantida
+
+================================================================================
+6. CASOS DE TESTE - SEGURANÇA E PERFORMANCE
+================================================================================
+
+6.1 CASO DE TESTE: CT-032 - Proteção contra SQL Injection
+Objetivo: Verificar validação contra ataques de injeção
+Pré-condições:
+  - Interface de busca ou cadastro acessível
+Passos:
+  1. No campo de busca, inserir: "; DROP TABLE produtos; --"
+  2. Confirmar busca
+Resultado esperado:
+  - Busca trata entrada como texto literal
+  - Nenhuma alteração no BD
+  - Mensagem padrão de busca sem resultados
+Critério de aceitação: Entrada validada e sanitizada
+
+6.2 CASO DE TESTE: CT-033 - Proteção CSRF
+Objetivo: Verificar proteção contra ataques CSRF
+Pré-condições:
+  - Usuário autenticado
+Passos:
+  1. Tentar submeter formulário sem token CSRF
+  2. Ou tentar requisição direta ao BD sem passa pelo sistema
+Resultado esperado:
+  - Requisição rejeitada
+  - Mensagem de erro ou redirecionamento
+  - Operação não realizada no BD
+Critério de aceitação: Token CSRF validado
+
+6.3 CASO DE TESTE: CT-034 - Encriptação de Senha
+Objetivo: Verificar se senhas não são armazenadas em texto plano
+Pré-condições:
+  - Acesso ao BD (ferramentas de teste)
+Passos:
+  1. Consultar tabela usuarios
+  2. Verificar coluna senha do usuário admin
+Resultado esperado:
+  - Senha não aparece como "senha123"
+  - Senha está em formato criptografado (SHA2 ou similar)
+  - Não é possível legibilidade direta
+Critério de aceitação: Senhas criptografadas no BD
+
+6.4 CASO DE TESTE: CT-035 - Performance de Listagem
+Objetivo: Verificar tempo de carregamento com múltiplos registros
+Pré-condições:
+  - Banco com 1000+ registros de produtos
+  - Interface de cadastro acessível
+Passos:
+  1. Medir tempo de acesso à interface
+  2. Medir tempo de carregamento da tabela
+Resultado esperado:
+  - Carregamento da página em < 3 segundos
+  - Tabela renderizada em < 2 segundos
+  - Responsivo mesmo com volume alto de dados
+Critério de aceitação: Performance dentro do requisito
+
+6.5 CASO DE TESTE: CT-036 - Performance de Busca
+Objetivo: Verificar tempo de resposta de busca
+Pré-condições:
+  - 1000+ produtos cadastrados
+  - Interface de busca acessível
+Passos:
+  1. Inserir termo de busca simples
+  2. Medir tempo até exibição de resultados
+Resultado esperado:
+  - Resultados exibidos em < 1 segundo
+  - Sem travamento ou delay visual
+Critério de aceitação: Busca responsiva
+
+6.6 CASO DE TESTE: CT-037 - Sessão Expirada
+Objetivo: Verificar comportamento com sessão expirada
+Pré-condições:
+  - Usuário autenticado
+  - Sistema configurado com timeout de sessão
+Passos:
+  1. Deixar sessão inativa por tempo configurado (ex: 30 min)
+  2. Tentar interagir com o sistema
+Resultado esperado:
+  - Redirecionamento automático para login
+  - Mensagem: "Sessão expirada, faça login novamente"
+  - Dados não são perdidos desnecessariamente
+Critério de aceitação: Sessão encerrada com segurança
+
+6.7 CASO DE TESTE: CT-038 - Acesso Não Autorizado
+Objetivo: Verificar proteção de recursos
+Pré-condições:
+  - Usuário não autenticado
+Passos:
+  1. Tentar acessar URL direta: /sistema/cadastro-produto
+  2. Sem fazer login
+Resultado esperado:
+  - Redirecionamento para página de login
+  - Nenhum acesso a dados sensíveis
+  - Nenhuma informação exposta
+Critério de aceitação: Acesso controlado e seguro
+
+================================================================================
+7. CASOS DE TESTE - COMPATIBILIDADE E INTEGRAÇÃO
+================================================================================
+
+7.1 CASO DE TESTE: CT-039 - Compatibilidade Chrome
+Objetivo: Verificar funcionamento em navegador Chrome
+Pré-condições:
+  - Chrome versão 120+ instalado
+Passos:
+  1. Acessar sistema no Chrome
+  2. Navegar por todas as funcionalidades
+  3. Testar formulários e submissões
+Resultado esperado:
+  - Sem erros de renderização
+  - Todos os componentes funcionam corretamente
+  - Estilos aplicados conforme esperado
+Critério de aceitação: Funcional em Chrome
+
+7.2 CASO DE TESTE: CT-040 - Compatibilidade Firefox
+Objetivo: Verificar funcionamento em Firefox
+Pré-condições:
+  - Firefox versão 120+ instalado
+Passos:
+  1. Acessar sistema no Firefox
+  2. Testar funcionalidades principais
+Resultado esperado:
+  - Sem diferenças visuais ou funcionais
+  - Interface responsiva
+Critério de aceitação: Funcional em Firefox
+
+7.3 CASO DE TESTE: CT-041 - Responsividade em Dispositivos Móveis
+Objetivo: Verificar adaptação a telas pequenas
+Pré-condições:
+  - Navegador com dev tools ou dispositivo real
+Passos:
+  1. Acessar sistema em resolução 375x667 (celular)
+  2. Testar navegação e formulários
+Resultado esperado:
+  - Layout adaptado para tela pequena
+  - Botões acessíveis no touch
+  - Sem scroll horizontal desnecessário
+  - Tabelas legíveis (scroll horizontal se necessário)
+Critério de aceitação: Interface responsiva em mobile
+
+7.4 CASO DE TESTE: CT-042 - Integração com Banco de Dados
+Objetivo: Verificar comunicação correta com MySQL
+Pré-condições:
+  - MySQL rodando e acessível
+  - Banco escola_db criado
+Passos:
+  1. Realizar inserção via interface
+  2. Verificar dados direto no BD
+Resultado esperado:
+  - Dados aparecem no BD conforme inseridos
+  - Sem discrepâncias de tipo ou valor
+  - Timestamps registrados corretamente
+Critério de aceitação: Sincronização perfeita BD-Sistema
+
+================================================================================
+8. CASOS DE TESTE DE REGRESSÃO
+================================================================================
+
+Após corrigir bugs ou implementar novos recursos, executar:
+- CT-001 a CT-005: Testes de login e autenticação
+- CT-009 a CT-020: Testes de cadastro
+- CT-021 a CT-031: Testes de gestão de estoque
+- CT-032 a CT-038: Testes de segurança
+
+================================================================================
+9. PLANO DE EXECUÇÃO
+================================================================================
+
+Fase 1 - Testes Unitários: CT-001 a CT-041 (Prioridade Alta)
+Fase 2 - Testes de Integração: CT-042 (Prioridade Alta)
+Fase 3 - Testes de Segurança: CT-032 a CT-038 (Prioridade Crítica)
+Fase 4 - Testes de Performance: CT-034 a CT-036 (Prioridade Média)
+Fase 5 - Testes de Compatibilidade: CT-039 a CT-041 (Prioridade Média)
+
+Total de Casos de Teste: 42
+Taxa de Sucesso Esperada: 100%
+Tempo Estimado: 16 horas de teste manual
+
+================================================================================
+FIM DO DESCRITIVO DE TESTES
+================================================================================ 

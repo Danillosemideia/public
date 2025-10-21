@@ -1,0 +1,141 @@
+SISTEMA DE GESTÃO DE ESTOQUE PARA EQUIPAMENTOS EDUCACIONAIS
+LISTA DE REQUISITOS FUNCIONAIS
+
+================================================================================
+1. REQUISITOS DE AUTENTICAÇÃO
+================================================================================
+
+RF-001: Autenticação de Usuário
+- O sistema deve permitir que usuários façam login através de um formulário contendo e-mail/usuário e senha
+- As credenciais devem ser validadas contra o banco de dados
+- Em caso de falha, o sistema deve exibir mensagem informando o motivo (usuário inválido ou senha incorreta)
+- Após falha de autenticação, o usuário deve ser redirecionado para a tela de login
+- Após sucesso, o usuário deve ser redirecionado para a interface principal
+
+RF-002: Gerenciamento de Sessão
+- O sistema deve manter informações da sessão do usuário logado
+- O sistema deve permitir logout, encerrando a sessão e redirecionando para login
+
+
+================================================================================
+2. REQUISITOS DA INTERFACE PRINCIPAL
+================================================================================
+
+RF-003: Exibição de Informações do Usuário
+- A interface principal deve exibir o nome completo do usuário autenticado
+
+RF-004: Navegação do Sistema
+- A interface principal deve fornecer opções de acesso aos módulos de cadastro de produto e gestão de estoque
+- O usuário deve poder realizar logout a qualquer momento
+
+RF-005: Layout Responsivo
+- A interface principal deve ter design intuitivo e responsivo
+
+
+================================================================================
+3. REQUISITOS DO CADASTRO DE PRODUTO
+================================================================================
+
+RF-006: Listagem de Produtos
+- O sistema deve exibir todos os produtos cadastrados em uma tabela
+- A listagem deve ser carregada automaticamente ao acessar a interface
+- A tabela deve exibir: ID, Nome do Produto, Descrição, Quantidade em Estoque, Estoque Mínimo, Data de Cadastro
+
+RF-007: Busca de Produtos
+- Deve existir um campo de busca na interface
+- A busca deve filtrar produtos por nome ou descrição
+- A busca deve ser executada via AJAX ou formulário
+- A tabela deve ser atualizada automaticamente com os resultados
+
+RF-008: Criação de Novo Produto
+- O sistema deve permitir o cadastro de novos produtos através de um formulário
+- Campos obrigatórios: Nome, Descrição, Quantidade Inicial, Estoque Mínimo
+- O sistema deve validar dados antes de inserir no banco
+- Deve exibir mensagem de sucesso ou erro conforme o resultado
+
+RF-009: Edição de Produto
+- O sistema deve permitir editar produtos existentes
+- Deve pré-carregar os dados do produto no formulário
+- Apenas campos modificáveis devem ser editáveis
+- Deve validar dados antes de atualizar
+
+RF-010: Exclusão de Produto
+- O sistema deve permitir deletar produtos existentes
+- Deve solicitar confirmação antes de executar a exclusão
+- Deve exibir mensagem de sucesso ou erro
+
+RF-011: Validação de Dados de Produto
+- Campo Nome: obrigatório, máximo 100 caracteres
+- Campo Descrição: obrigatório, máximo 500 caracteres
+- Campo Quantidade: obrigatório, deve ser número inteiro maior ou igual a zero
+- Campo Estoque Mínimo: obrigatório, deve ser número inteiro maior ou igual a zero
+- Sistema deve exibir alertas específicos para cada validação falha
+
+
+================================================================================
+4. REQUISITOS DA GESTÃO DE ESTOQUE
+================================================================================
+
+RF-012: Listagem de Produtos em Ordem Alfabética
+- O sistema deve listar todos os produtos em ordem alfabética (A-Z)
+- Deve aplicar algoritmo de ordenação (Bubble Sort, Quick Sort ou similar)
+- Lista deve ser carregada ao acessar a interface
+
+RF-013: Seleção de Produto para Movimentação
+- O usuário deve poder selecionar um produto da lista
+- Para cada produto, deve haver opção de escolher entre movimentação de "Entrada" ou "Saída"
+
+RF-014: Registro de Entrada de Estoque
+- O sistema deve permitir registrar entrada de produtos
+- Campos: Produto, Quantidade, Data da Movimentação
+- Deve validar que a quantidade seja maior que zero
+- Deve atualizar a quantidade em estoque do produto
+- Deve registrar no histórico com responsável e data/hora
+
+RF-015: Registro de Saída de Estoque
+- O sistema deve permitir registrar saída de produtos
+- Campos: Produto, Quantidade, Data da Movimentação
+- Deve validar que a quantidade seja maior que zero
+- Deve validar que a quantidade em estoque seja suficiente
+- Deve atualizar a quantidade em estoque do produto
+- Deve registrar no histórico com responsável e data/hora
+
+RF-016: Alerta de Estoque Mínimo
+- Ao registrar uma saída de estoque, o sistema deve verificar automaticamente se a quantidade restante ficou abaixo do estoque mínimo
+- Se abaixo do mínimo, deve exibir alerta visual ao usuário
+- O alerta deve indicar o produto e as quantidades (mínimo configurado vs. atual)
+
+RF-017: Histórico de Movimentações
+- O sistema deve manter registro completo de todas as movimentações
+- Cada registro deve incluir: Produto, Tipo (Entrada/Saída), Quantidade, Data/Hora, Responsável
+- Histórico deve ser consultável e rastreável
+
+RF-018: Validação de Movimentação
+- Sistema deve validar quantidade mínima (> 0)
+- Sistema deve validar suficiência de estoque para saídas
+- Sistema deve validar data da movimentação
+
+
+================================================================================
+5. REQUISITOS NÃO-FUNCIONAIS
+================================================================================
+
+RF-019: Segurança
+- Senhas devem ser armazenadas criptografadas no banco de dados
+- Sessões devem ser protegidas contra ataques CSRF
+- Validação de entrada deve prevenir SQL Injection
+
+RF-020: Rastreabilidade
+- Cada operação deve registrar o usuário responsável
+- Cada operação deve registrar a data e hora exata
+- Nenhuma exclusão deve ser permitida sem registro anterior
+
+RF-021: Usabilidade
+- Interface deve ser intuitiva e auto-explicativa
+- Mensagens de erro e sucesso devem ser claras
+- Confirmações devem ser solicitadas para operações críticas
+
+RF-022: Performance
+- Listagens devem carregar em menos de 3 segundos
+- Buscas devem ser responsivas
+- Sistema deve suportar mínimo 1000 registros de produtos
